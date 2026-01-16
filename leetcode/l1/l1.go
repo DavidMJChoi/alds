@@ -16,6 +16,23 @@ func main() {
 }
 
 func twoSum(nums []int, target int) []int {
+	hm := make(map[int]int)
+
+	for i := range nums {
+		n := nums[i]
+		t := target - n
+		j, ok := hm[t]
+		if ok {
+			return []int{i, j}
+		} else {
+			hm[n] = i
+		}
+	}
+
+	return []int{}
+}
+
+func twoSumSort(nums []int, target int) []int {
 	indices := radixSortIndices(nums)
 	nums = getSortedByIndices(nums, indices)
 
