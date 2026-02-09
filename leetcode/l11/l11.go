@@ -1,4 +1,5 @@
 // LeetCode L11
+// two pointers, arena method.
 
 package main
 
@@ -25,6 +26,7 @@ func maxArea(height []int) int {
 			maxa = a
 		}
 
+		// keep the higher side, try to see if we can get a better lower side
 		if height[i] > height[j] {
 			j--
 		} else {
