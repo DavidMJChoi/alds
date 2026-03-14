@@ -14,7 +14,7 @@ func main() {
 func rotate1(nums []int, k int) {
 	n := len(nums)
 
-	k %= len(nums)
+	k %= n
 
 	for range k {
 		tmp := nums[n-1]
@@ -32,25 +32,21 @@ func rotate2(nums []int, k int) {
 	n := len(nums)
 	k %= n
 
-	front := make([]int, n-k)
 	rear := make([]int, k)
-
-	copy(front, nums[:n-k])
 	copy(rear, nums[n-k:])
 
+	// move front part to rear n-k
+	j := n - k - 1
+	for j >= 0 {
+		nums[j+k] = nums[j]
+		j--
+	}
+	// replace rear part to front k
 	i := 0
 	for i < k {
 		nums[i] = rear[i]
 		i++
 	}
-	j := 0
-	for i < n {
-		nums[i] = front[j]
-		i++
-		j++
-	}
-
-	fmt.Println(nums)
 }
 
 // 3. cyclic placement WORKING ON THIS...

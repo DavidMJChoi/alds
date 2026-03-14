@@ -14,6 +14,60 @@ func main() {
 }
 
 func productExceptSelf(nums []int) []int {
+	n := len(nums)
+	prod := make([]int, n)
+
+	// it is guaranteed that n >= 2
+	prod[0] = 1
+	prod[1] = nums[0]
+	i := 2
+	for i < n {
+		prod[i] = prod[i-1] * nums[i-1]
+		i++
+	}
+
+	prodRight := 1
+	j := n - 2
+	for j >= 0 {
+		prodRight *= nums[j+1]
+		prod[j] *= prodRight
+		j--
+	}
+
+	return prod
+}
+
+func productExceptSelf2(nums []int) []int {
+	n := len(nums)
+	prodLeft := make([]int, n)
+	prodRight := make([]int, n)
+
+	// it is guaranteed that n >= 2
+	prodLeft[0] = 1
+	prodLeft[1] = nums[0]
+	i := 2
+	for i < n {
+		prodLeft[i] = prodLeft[i-1] * nums[i-1]
+		i++
+	}
+
+	prodRight[n-1] = 1
+	prodRight[n-2] = nums[n-1]
+	j := n - 3
+	for j >= 0 {
+		prodRight[j] = prodRight[j+1] * nums[j+1]
+		j--
+	}
+
+	prod := make([]int, n)
+	for i := range n {
+		prod[i] = prodLeft[i] * prodRight[i]
+	}
+
+	return prod
+}
+
+func productExceptSelf1(nums []int) []int {
 	out := make([]int, len(nums))
 
 	out[0] = 1

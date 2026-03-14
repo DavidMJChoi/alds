@@ -30,6 +30,30 @@ func main() {
 
 func merge(intervals [][]int) [][]int {
 	slices.SortFunc(intervals, func(a []int, b []int) int {
+		return a[0] - b[0]
+	})
+
+	newIntervals := [][]int{intervals[0]}
+	i := 1
+	j := 0
+	for i < len(intervals) {
+		prev := newIntervals[j]
+		cur := intervals[i]
+		if cur[0] > prev[1] {
+			newIntervals = append(newIntervals, cur)
+			j++
+		}
+		if cur[0] <= prev[1] && cur[1] >= prev[1] {
+			prev[1] = cur[1]
+		}
+		i++
+	}
+
+	return newIntervals
+}
+
+func merge2(intervals [][]int) [][]int {
+	slices.SortFunc(intervals, func(a []int, b []int) int {
 		if a[0] < b[0] {
 			return -1
 		} else if a[0] == b[0] {
