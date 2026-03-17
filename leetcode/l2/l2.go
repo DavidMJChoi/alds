@@ -69,3 +69,46 @@ func sliceSum(s1, s2 []int) []int {
 
 	return ret
 }
+
+func addTwoNumbers2(l1 *ListNode, l2 *ListNode) *ListNode {
+	len1 := 0
+	for p := l1; p != nil; p = p.Next {
+		len1++
+	}
+	len2 := 0
+	for p := l2; p != nil; p = p.Next {
+		len2++
+	}
+
+	if len1 < len2 {
+		l1, l2 = l2, l1
+	}
+
+	head := l1
+	carry := 0
+	prevL1 := l1
+	for l2 != nil {
+		curr := (l1.Val + l2.Val + carry) % 10
+		carry = (l1.Val + l2.Val + carry) / 10
+		l1.Val = curr
+		prevL1 = l1
+		l1 = l1.Next
+		l2 = l2.Next
+	}
+
+	for carry > 0 {
+		if l1 == nil {
+			prevL1.Next = new(ListNode)
+			prevL1.Next.Val = 1
+			break
+		} else {
+			curr := (l1.Val + carry) % 10
+			carry = (l1.Val + carry) / 10
+			l1.Val = curr
+			prevL1 = l1
+			l1 = l1.Next
+		}
+	}
+
+	return head
+}
